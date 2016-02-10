@@ -1,6 +1,6 @@
 [![GoDoc](https://godoc.org/github.com/wimanwifi/go-cloudmqtt?status.svg)](https://godoc.org/github.com/wimanwifi/go-cloudmqtt)
 
-# Pure Go CloudMQTT API Client
+# CloudMQTT APIs Client Library for Go
 
 go-cloudmqtt is intended to be used as a Go package. It does not include a command to run the interpreter.
 

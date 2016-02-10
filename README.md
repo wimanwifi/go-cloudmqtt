@@ -1,3 +1,5 @@
+[![GoDoc](https://godoc.org/github.com/wimanwifi/go-cloudmqtt?status.svg)](https://godoc.org/github.com/wimanwifi/go-cloudmqtt)
+
 # Pure Go CloudMQTT API Client
 
 go-cloudmqtt is intended to be used as a Go package. It does not include a command to run the interpreter.
@@ -44,8 +46,8 @@ func main() {
 
 	// List ACL
 	fmt.Printf("\nACL:\n")
-	if acllist, err := api.ListACL(); err == nil {
-		for _, acl := range acllist {
+	if aclList, err := api.ListACL(); err == nil {
+		for _, acl := range aclList {
 			fmt.Printf("%s => %s [r: %t / w: %t]\n", acl.Username, acl.Topic, acl.Read, acl.Write)
 		}
 	}

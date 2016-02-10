@@ -30,8 +30,8 @@ func main() {
 
 	// List ACL
 	fmt.Printf("\nACL:\n")
-	if acllist, err := api.ListACL(); err == nil {
-		for _, acl := range acllist {
+	if aclList, err := api.ListACL(); err == nil {
+		for _, acl := range aclList {
 			fmt.Printf("%s => %s [r: %t / w: %t]\n", acl.Username, acl.Topic, acl.Read, acl.Write)
 		}
 	}

@@ -2,19 +2,25 @@ package cloudmqtt
 
 import (
 	"bytes"
+	"encoding/json"
 	"fmt"
 	"net/http"
 )
 
-func (client *Client) AddUser(username, password string) (err error) {
+func (client Client) AddUser(username, password string) error {
 	url := "https://api.cloudmqtt.com/user"
 
-	jsonBody := []byte(`{"username":"` + username + `", "password":"` + password + `"}`)
-	if err != nil {
+	s := User{
+		Username: username,
+		Password: password,
+	}
+	body := new(bytes.Buffer)
+	enc := json.NewEncoder(body)
+	if err := enc.Encode(s); err != nil {
 		return err
 	}
 
-	req, err := http.NewRequest("POST", url, bytes.NewBuffer(jsonBody))
+	req, err := http.NewRequest("POST", url, body)
 	if err != nil {
 		return err
 	}
@@ -32,5 +38,5 @@ func (client *Client) AddUser(username, password string) (err error) {
 		return fmt.Errorf(resp.Status)
 	}
 
-	return err
+	return nil
 }

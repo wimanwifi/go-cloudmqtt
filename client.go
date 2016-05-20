@@ -5,9 +5,9 @@ type Client struct {
 	CloudMQTTPassword string
 }
 
-func New(username string, password string) *Client {
-	client := new(Client)
-	client.CloudMQTTUsername = username
-	client.CloudMQTTPassword = password
-	return client
+func New(username, password string) Client {
+	return Client{
+		CloudMQTTUsername: username,
+		CloudMQTTPassword: password,
+	}
 }

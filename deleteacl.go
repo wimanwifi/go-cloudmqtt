@@ -2,19 +2,25 @@ package cloudmqtt
 
 import (
 	"bytes"
+	"encoding/json"
 	"fmt"
 	"net/http"
 )
 
-func (client *Client) DeleteACL(username, topic string) (err error) {
+func (client Client) DeleteACL(username, topic string) error {
 	url := "https://api.cloudmqtt.com/acl"
 
-	jsonBody := []byte(`{"username":"` + username + `", "topic":"` + topic + `"}`)
-	if err != nil {
+	s := UserACL{
+		Username: username,
+		Topic:    topic,
+	}
+	body := new(bytes.Buffer)
+	enc := json.NewEncoder(body)
+	if err := enc.Encode(s); err != nil {
 		return err
 	}
 
-	req, err := http.NewRequest("DELETE", url, bytes.NewBuffer(jsonBody))
+	req, err := http.NewRequest("DELETE", url, body)
 	if err != nil {
 		return err
 	}
@@ -32,5 +38,5 @@ func (client *Client) DeleteACL(username, topic string) (err error) {
 		return fmt.Errorf(resp.Status)
 	}
 
-	return err
+	return nil
 }

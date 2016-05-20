@@ -5,7 +5,7 @@ import (
 	"net/http"
 )
 
-func (client *Client) DeleteUser(username string) (err error) {
+func (client Client) DeleteUser(username string) error {
 	url := "https://api.cloudmqtt.com/user"
 
 	req, err := http.NewRequest("DELETE", fmt.Sprintf("%s/%s", url, username), nil)
@@ -26,5 +26,5 @@ func (client *Client) DeleteUser(username string) (err error) {
 		return fmt.Errorf(resp.Status)
 	}
 
-	return err
+	return nil
 }

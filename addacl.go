@@ -2,20 +2,27 @@ package cloudmqtt
 
 import (
 	"bytes"
+	"encoding/json"
 	"fmt"
 	"net/http"
-	"strconv"
 )
 
-func (client *Client) AddACL(username string, topic string, read bool, write bool) (err error) {
+func (client Client) AddACL(username, topic string, read, write bool) error {
 	url := "https://api.cloudmqtt.com/acl"
 
-	jsonBody := []byte(`{"username":"` + username + `", "topic":"` + topic + `", "read": ` + strconv.FormatBool(read) + `, "write": ` + strconv.FormatBool(write) + `}`)
-	if err != nil {
+	s := ACL{
+		Username: username,
+		Topic:    topic,
+		Read:     read,
+		Write:    write,
+	}
+	body := new(bytes.Buffer)
+	enc := json.NewEncoder(body)
+	if err := enc.Encode(s); err != nil {
 		return err
 	}
 
-	req, err := http.NewRequest("POST", url, bytes.NewBuffer(jsonBody))
+	req, err := http.NewRequest("POST", url, body)
 	if err != nil {
 		return err
 	}
@@ -33,5 +40,5 @@ func (client *Client) AddACL(username string, topic string, read bool, write boo
 		return fmt.Errorf(resp.Status)
 	}
 
-	return err
+	return nil
 }
